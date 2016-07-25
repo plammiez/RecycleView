@@ -8,14 +8,14 @@ import android.util.Log;
 
 public abstract class SingleFragmentActivity extends FragmentActivity {
 
-    protected static final String TAG = "augment-ayp";
+    //protected static final String TAG = "augment-ayp";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_single_fragment);
 
-        Log.d(TAG, "On create activity");
+        Log.d(CrimeListFragment.TAG, "On create activity");
 
         FragmentManager fm = getSupportFragmentManager();
         Fragment f = fm.findFragmentById(R.id.fragment_container);
@@ -26,9 +26,9 @@ public abstract class SingleFragmentActivity extends FragmentActivity {
             fm.beginTransaction()
                     .add(R.id.fragment_container, f)
                     .commit();
-            Log.d(TAG, "Fragment is created");
+            Log.d(CrimeListFragment.TAG, "Fragment is created");
         } else {
-            Log.d(TAG, "Fragment have already been created");
+            Log.d(CrimeListFragment.TAG, "Fragment have already been created");
 
         }
     }
