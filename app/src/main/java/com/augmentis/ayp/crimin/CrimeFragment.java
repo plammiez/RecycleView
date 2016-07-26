@@ -48,7 +48,7 @@ public class CrimeFragment extends Fragment {
         UUID crimeId = (UUID) getArguments().getSerializable(CRIME_ID);
         position = getArguments().getInt(CRIME_POSITION);
         //crime = new Crime();
-        crime = CrimeLab.getInstance().getCrimeById(crimeId);
+        crime = CrimeLab.getInstance(getActivity()).getCrimeById(crimeId);
         Log.d(CrimeListFragment.TAG, "crime.getID() = " + crime.getId());
         Log.d(CrimeListFragment.TAG, "crime.getTitle() = " + crime.getTitle());
     }
@@ -68,6 +68,7 @@ public class CrimeFragment extends Fragment {
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
                 crime.setTitle(s.toString());
+                addThisPositionToResult(position);
             }
 
             @Override
@@ -86,18 +87,22 @@ public class CrimeFragment extends Fragment {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 crime.setSolved(isChecked);
+                addThisPositionToResult(position);
                 Log.d(CrimeListFragment.TAG, "Crime:" + crime.toString());
             }
         });
 
-        Intent intent = new Intent();
-        intent.putExtra("position", position);
-        Log.d(CrimeListFragment.TAG, "send position back" + position);
-        getActivity().setResult(Activity.RESULT_OK, intent);
         return v;
     }
 
+
     private String getFormattedDate(Date date) {
         return new SimpleDateFormat("dd MMMM yyyy").format(date);
+    }
+
+    private void addThisPositionToResult(int position){
+        if (getActivity() instanceof  CrimePagerActivity) {
+            ((CrimePagerActivity) getActivity()).addPageUpdate(position);
+        }
     }
 }

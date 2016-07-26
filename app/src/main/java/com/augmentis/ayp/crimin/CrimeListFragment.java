@@ -13,7 +13,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CheckBox;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import java.util.List;
 
@@ -30,7 +29,7 @@ public class CrimeListFragment extends Fragment {
 
     protected static final String TAG = "CRIME_LIST";
 
-    private int crimePos;
+    private Integer[] crimePos;
 
     @Nullable
     @Override
@@ -49,7 +48,7 @@ public class CrimeListFragment extends Fragment {
      * Update UI
      */
     private void updateUI() {
-        CrimeLab crimeLab = CrimeLab.getInstance();
+        CrimeLab crimeLab = CrimeLab.getInstance(getActivity());
         List<Crime> crimes = crimeLab.getCrimes();
 
         if (_adapter == null){
@@ -57,9 +56,15 @@ public class CrimeListFragment extends Fragment {
             _crimeRecycleView.setAdapter(_adapter);
         } else {
            //_adapter.notifyDataSetChanged();
-            _adapter.notifyItemChanged(crimePos);
+           //_adapter.notifyItemRangeChanged(crimePos, 5);
+           //_adapter.notifyItemChanged(crimePos);
+            if(crimePos != null){
+                for(Integer pos : crimePos){
+                    _adapter.notifyItemChanged(pos);
+                    Log.d(TAG, "notify change at " + pos);
+                }
+            }
         }
-
     }
 
      @Override
@@ -77,8 +82,8 @@ public class CrimeListFragment extends Fragment {
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (requestCode == REQUEST_UPDATED_CRIME){
-            if (requestCode == Activity.RESULT_OK) {
-                crimePos = (int) data.getExtras().get("position");
+            if (resultCode == Activity.RESULT_OK) {
+                crimePos = (Integer[]) data.getExtras().get("position");
                 Log.d(TAG, "get CrimePos " + crimePos);
             }
             Log.d(TAG, "Return from crimeFragment");
@@ -116,7 +121,7 @@ public class CrimeListFragment extends Fragment {
         public void onClick(View v) {
             Log.d(TAG, "Send position : " + _position);
             //Toast.makeText(getActivity(), "Press! " + _titleTextView.getText(), Toast.LENGTH_SHORT).show();
-            Intent intent = CrimeActivity.newIntent(getActivity(), _crime.getId(), _position);
+            Intent intent = CrimePagerActivity.newIntent(getActivity(), _crime.getId(), _position);
             //startActivity(intent);
             startActivityForResult(intent, REQUEST_UPDATED_CRIME);
         }
@@ -138,6 +143,11 @@ public class CrimeListFragment extends Fragment {
             LayoutInflater layoutInflater = LayoutInflater.from(getActivity());
             View v = layoutInflater.inflate(R.layout.list_item_crime, parent, false);
             return new CrimeHolder(v);
+        }
+
+        @Override
+        public int getItemViewType(int position) {
+            return super.getItemViewType(position);
         }
 
         @Override
