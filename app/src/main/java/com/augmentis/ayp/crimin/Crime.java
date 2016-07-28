@@ -1,6 +1,7 @@
 package com.augmentis.ayp.crimin;
 
 import java.util.Date;
+import java.util.Timer;
 import java.util.UUID;
 
 /**
@@ -10,6 +11,10 @@ public class Crime {
     private UUID id;
     private String title;
     private Date crimeDate;
+    private Timer crimeTime;
+
+
+
     private boolean solved;
 
     public Crime() {
@@ -40,6 +45,14 @@ public class Crime {
 
     public void setCrimeDate(Date crimeDate) {
         this.crimeDate = crimeDate;
+    }
+
+    public Timer getCrimeTime() {
+        return crimeTime;
+    }
+
+    public void setCrimeTime(Timer crimeTime) {
+        this.crimeTime = crimeTime;
     }
 
     public boolean isSolved() {
