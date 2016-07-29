@@ -24,13 +24,13 @@ public class CrimeLab {
     private CrimeLab() {
         crimeList = new ArrayList<>();
 
-        for(int i = 1; i <= 100; i++) {
+        /*for(int i = 1; i <= 100; i++) {
             Crime crime = new Crime();
             crime.setTitle("Crime #" + i);
             crime.setSolved( i % 2 == 0);
 
             crimeList.add(crime);
-        }
+        }*/
     }
 
     public Crime getCrimeById(UUID uuid) {
@@ -63,5 +63,13 @@ public class CrimeLab {
         for(int i=0;i<size;i++) {
             System.out.println(crimeList.get(i));
         }
+    }
+
+    public void addCrime(Crime crime) {
+        crimeList.add(crime);
+    }
+
+    public void delCrime(Crime crime) {
+        crimeList.remove(crime);
     }
 }

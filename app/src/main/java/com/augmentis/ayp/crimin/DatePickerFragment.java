@@ -31,8 +31,9 @@ public class DatePickerFragment extends DialogFragment implements DialogInterfac
         return df;
     }
 
-
     DatePicker _datePicker;
+//    int hour;
+//    int minute;
 
     @NonNull
     @Override
@@ -82,4 +83,9 @@ public class DatePickerFragment extends DialogFragment implements DialogInterfac
 
         getTargetFragment().onActivityResult(getTargetRequestCode(), resultCode, intent);
     }
+
+//    protected void acceptTime(int hour, int min){
+//        this.hour = hour;
+//        this.minute = min;
+//    }
 }

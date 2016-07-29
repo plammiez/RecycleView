@@ -18,11 +18,11 @@ import java.util.Collections;
 import java.util.List;
 import java.util.UUID;
 
-public class CrimePagerActivity extends FragmentActivity {
+public class CrimePagerActivity extends AppCompatActivity {
 
     private ViewPager _viewPager;
     private List<Crime> _crimes;
-    private int _position;
+//    private int _position;
     private UUID _crimeId;
 
     private List<Integer> positionChanged = new ArrayList<>();
@@ -33,7 +33,7 @@ public class CrimePagerActivity extends FragmentActivity {
         setContentView(R.layout.activity_crime_pager);
 
         _crimeId = (UUID) getIntent().getSerializableExtra(CRIME_ID);
-        _position = (int) getIntent().getExtras().get(CRIME_POSITION);
+//        _position = (int) getIntent().getExtras().get(CRIME_POSITION);
 
         _viewPager = (ViewPager) findViewById(R.id.activity_crime_pager_view);
 
@@ -60,27 +60,26 @@ public class CrimePagerActivity extends FragmentActivity {
         _viewPager.setCurrentItem(position);
     }
 
-    protected void addPageUpdate(int position){
-
-        if (positionChanged.contains(position)){
-            return;
-        }
-        positionChanged.add(position);
-
-        Intent intent = new Intent();
-        Integer[] positions = positionChanged.toArray(new Integer[0]);
-        intent.putExtra("position", positions);
-        Log.d(CrimeListFragment.TAG, "send position back: " + position);
-        setResult(Activity.RESULT_OK, intent);
-    }
+//    protected void addPageUpdate(int position){
+//
+//        if (positionChanged.contains(position)){
+//            return;
+//        }
+//        positionChanged.add(position);
+//
+//        Intent intent = new Intent();
+//        Integer[] positions = positionChanged.toArray(new Integer[0]);
+//        intent.putExtra("position", positions);
+//        Log.d(CrimeListFragment.TAG, "send position back: " + position);
+//        setResult(Activity.RESULT_OK, intent);
+//    }
 
     protected static final String CRIME_ID = "CrimePagerActivity.crimeId";
-    protected static final String CRIME_POSITION = "CrimePagerActivity.crimePos";
+//    protected static final String CRIME_POSITION = "CrimePagerActivity.crimePos";
 
-    public static Intent newIntent(Context activity, UUID id, int position){
+    public static Intent newIntent(Context activity, UUID id){
         Intent intent = new Intent(activity, CrimePagerActivity.class);
         intent.putExtra(CRIME_ID, id);
-        intent.putExtra(CRIME_POSITION, position);
         return intent;
     }
 }

@@ -1,5 +1,6 @@
 package com.augmentis.ayp.crimin;
 
+import java.sql.Time;
 import java.util.Date;
 import java.util.Timer;
 import java.util.UUID;
@@ -11,7 +12,7 @@ public class Crime {
     private UUID id;
     private String title;
     private Date crimeDate;
-    private Timer crimeTime;
+//    private Date crimeTime;
 
 
 
@@ -19,6 +20,7 @@ public class Crime {
 
     public Crime() {
         crimeDate = new Date();
+//        crimeTime = new Date();
         id = UUID.randomUUID();
     }
 
@@ -47,13 +49,13 @@ public class Crime {
         this.crimeDate = crimeDate;
     }
 
-    public Timer getCrimeTime() {
-        return crimeTime;
-    }
-
-    public void setCrimeTime(Timer crimeTime) {
-        this.crimeTime = crimeTime;
-    }
+//    public Date getCrimeTime() {
+//        return crimeTime;
+//    }
+//
+//    public void setCrimeTime(Timer crimeTime) {
+//        this.crimeTime = crimeTime;
+//    }
 
     public boolean isSolved() {
         return solved;
@@ -69,6 +71,7 @@ public class Crime {
         builder.append("UUID=").append(id);
         builder.append(",Title=").append(title);
         builder.append(",Crime Date=").append(crimeDate);
+//        builder.append(",Crime Time=").append(crimeTime);
         builder.append(",Solved=").append(solved);
         return builder.toString();
     }

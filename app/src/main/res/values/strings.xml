@@ -5,4 +5,9 @@
     <string name="crime_detail_label">Details</string>
     <string name="crime_solved_label">Solved</string>
     <string name="date_picker_title">pickerDate</string>
+    <string name="time_picker_title">pickerTime</string>
+    <string name="show_subtitle">showSubTitle</string>
+    <string name="show_test_1">test1</string>
+    <string name="subtitle_format">%d Crime(s)</string>
+    <string name="hide_subtitle">Hide Subtitle</string>
 </resources>

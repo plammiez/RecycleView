@@ -5,10 +5,14 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CheckBox;
@@ -22,6 +26,7 @@ import java.util.List;
 public class CrimeListFragment extends Fragment {
 
     private static final int REQUEST_UPDATED_CRIME = 1;
+    private static final String SUBTITLE_VISIBLE_STATE = "SUBTITLEVISIBLE";
 
     RecyclerView _crimeRecycleView;
 
@@ -31,6 +36,9 @@ public class CrimeListFragment extends Fragment {
 
     private Integer[] crimePos;
 
+    private boolean _subtitleVisible;
+
+
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -39,9 +47,70 @@ public class CrimeListFragment extends Fragment {
         _crimeRecycleView = (RecyclerView) v.findViewById(R.id.crime_recycle_view);
         _crimeRecycleView.setLayoutManager(new LinearLayoutManager(getActivity()));
 
+
+        if (savedInstanceState != null){
+            _subtitleVisible = savedInstanceState.getBoolean(SUBTITLE_VISIBLE_STATE);
+        }
+
         updateUI();
 
         return v;
+    }
+
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        super.onCreateOptionsMenu(menu, inflater);
+
+        inflater.inflate(R.menu.crime_list_menu, menu);
+
+        MenuItem menuItem = menu.findItem(R.id.menu_item_show_subtitle);
+
+        if (_subtitleVisible) {
+            menuItem.setTitle(R.string.hide_subtitle);
+        } else {
+            menuItem.setTitle(R.string.show_subtitle);
+        }
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.menu_item_new_crime:
+                Crime crime = new Crime();
+                CrimeLab.getInstance(getActivity()).addCrime(crime);
+                Intent intent = CrimePagerActivity.newIntent(getActivity(), crime.getId());
+                startActivity(intent);
+                return true;
+
+            case R.id.menu_item_show_subtitle:
+                _subtitleVisible = !_subtitleVisible;
+                getActivity().invalidateOptionsMenu();
+                updateSubTitle();
+                return true;
+
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+    }
+
+    public void updateSubTitle(){
+        CrimeLab crimeLab = CrimeLab.getInstance(getActivity());
+        int crimeCount = crimeLab.getCrimes().size();
+        String subtitle = getString(R.string.subtitle_format, crimeCount);
+
+        if (!_subtitleVisible) {
+            subtitle = null;
+        }
+
+        AppCompatActivity appCompatActivity = (AppCompatActivity) getActivity();
+        appCompatActivity.getSupportActionBar().setSubtitle(subtitle);
+    }
+
+    @Override
+    public void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+
+        outState.putBoolean(SUBTITLE_VISIBLE_STATE, _subtitleVisible);
     }
 
     /**
@@ -55,21 +124,24 @@ public class CrimeListFragment extends Fragment {
             _adapter = new crimeAdapter(crimes);
             _crimeRecycleView.setAdapter(_adapter);
         } else {
-           //_adapter.notifyDataSetChanged();
+           _adapter.notifyDataSetChanged();
            //_adapter.notifyItemRangeChanged(crimePos, 5);
            //_adapter.notifyItemChanged(crimePos);
-            if(crimePos != null){
-                for(Integer pos : crimePos){
-                    _adapter.notifyItemChanged(pos);
-                    Log.d(TAG, "notify change at " + pos);
-                }
-            }
+//            if(crimePos != null){
+//                for(Integer pos : crimePos){
+//                    _adapter.notifyItemChanged(pos);
+//                    Log.d(TAG, "notify change at " + pos);
+//                }
+//            }
         }
+        updateSubTitle();
     }
 
      @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+         setHasOptionsMenu(true);
     }
 
     @Override
@@ -121,7 +193,7 @@ public class CrimeListFragment extends Fragment {
         public void onClick(View v) {
             Log.d(TAG, "Send position : " + _position);
             //Toast.makeText(getActivity(), "Press! " + _titleTextView.getText(), Toast.LENGTH_SHORT).show();
-            Intent intent = CrimePagerActivity.newIntent(getActivity(), _crime.getId(), _position);
+            Intent intent = CrimePagerActivity.newIntent(getActivity(), _crime.getId());
             //startActivity(intent);
             startActivityForResult(intent, REQUEST_UPDATED_CRIME);
         }
