@@ -1,44 +1,52 @@
 package com.augmentis.ayp.crimin;
 
-import java.sql.Time;
+
 import java.util.Date;
-import java.util.Timer;
 import java.util.UUID;
 
 /**
- * Created by Rawin on 18-Jul-16.
+ * Created by Apinya on 7/18/2016.
  */
 public class Crime {
     private UUID id;
     private String title;
     private Date crimeDate;
-//    private Date crimeTime;
-
-
-
     private boolean solved;
+    private String suspect;
 
-    public Crime() {
+    public String getSuspect() {
+        return suspect;
+    }
+
+    public void setSuspect(String suspect) {
+        this.suspect = suspect;
+    }
+
+    public Crime(){
+        this(UUID.randomUUID());
+        crimeDate  = new Date();
+
+    }
+
+    public Crime(UUID uuid){
+        this.id = uuid;
         crimeDate = new Date();
-//        crimeTime = new Date();
-        id = UUID.randomUUID();
+    }
+
+    public UUID getId() {
+        return id;
     }
 
     public String getTitle() {
         return title;
     }
 
-    public void setTitle(String title) {
-        this.title = title;
-    }
-
-    public UUID getId() {
-
-        return id;
-    }
-
     public void setId(UUID id) {
         this.id = id;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
     }
 
     public Date getCrimeDate() {
@@ -49,14 +57,6 @@ public class Crime {
         this.crimeDate = crimeDate;
     }
 
-//    public Date getCrimeTime() {
-//        return crimeTime;
-//    }
-//
-//    public void setCrimeTime(Timer crimeTime) {
-//        this.crimeTime = crimeTime;
-//    }
-
     public boolean isSolved() {
         return solved;
     }
@@ -65,14 +65,15 @@ public class Crime {
         this.solved = solved;
     }
 
+
     @Override
     public String toString() {
         StringBuilder builder = new StringBuilder();
         builder.append("UUID=").append(id);
         builder.append(",Title=").append(title);
         builder.append(",Crime Date=").append(crimeDate);
-//        builder.append(",Crime Time=").append(crimeTime);
         builder.append(",Solved=").append(solved);
+        builder.append(",Suspect=").append(suspect);
         return builder.toString();
     }
 }
