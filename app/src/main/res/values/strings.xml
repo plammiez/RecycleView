@@ -12,4 +12,21 @@
     <string name="hide_subtitle">Hide Subtitle</string>
     <string name="choose_suspect">Choose Suspect</string>
     <string name="sent_crime_report">Send Crime Report</string>
+    <string name="crime_report_no_suspect">There is no suspect</string>
+    <string name="crime_report_with_suspect">The suspect is  %s</string>
+    <string name="crime_report_solved">The case is solved</string>
+    <string name="crime_report_unsolved">The case is not solved</string>
+    <string name="crime_report">%1$s!
+    The crime was discovered on %2$s. %3$s, and %4$s</string>
+
+    <string name="crime_report_subject">CriminalIntent Crime Report</string>
+    <string name="send_report">Send Crime Report Via</string>
+    <string name="call_crime_suspect">Call Suspect</string>
+    <string name="no_data_available">No Data! Please click above button for add data.</string>
+
+    <plurals name="Subtitle_format">
+        <item quantity="one">%d Crime</item>
+        <item quantity="other">%d Crimes</item>
+    </plurals>
+
 </resources>

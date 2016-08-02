@@ -29,6 +29,7 @@ public class CrimeListFragment extends Fragment {
     private static final int REQUEST_UPDATED_CRIME = 401;
     private static final java.lang.String SUBTITLE_VISIBLE_STATE = "SUBTITLE_VISIBLE";
     private RecyclerView _crimeRecyclerView;
+    private TextView empty_view;
 
     private CrimeAdapter _adapter;
 
@@ -46,13 +47,13 @@ public class CrimeListFragment extends Fragment {
         _crimeRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity())); // set layoutManager into this no matter what they doing
         //but we know it will draw follow LManager what class like LinearLManager
 
+        empty_view = (TextView) v.findViewById(R.id.emtpy_views);
+
         if(savedInstanceState != null){
             _subtitleVisible = savedInstanceState.getBoolean(SUBTITLE_VISIBLE_STATE);
         }
-
         updateUI();//call method update UI to drawing fragment
         return v;
-
     }
 
     @Override
@@ -68,7 +69,6 @@ public class CrimeListFragment extends Fragment {
         }else {
             menuItem.setTitle(R.string.show_subtitle);
         }
-
     }
 
     /**
@@ -81,17 +81,20 @@ public class CrimeListFragment extends Fragment {
         if (_adapter == null) {
             _adapter = new CrimeAdapter(this, crimes);
             _crimeRecyclerView.setAdapter(_adapter);
+//            _crimeRecyclerView.setVisibility(View.INVISIBLE);
+//            empty_view.setVisibility(View.VISIBLE);
         }else {
             _adapter.setCrimes(crimeLab.getCrimes());
             _adapter.notifyDataSetChanged();
-
+//            _crimeRecyclerView.setVisibility(View.VISIBLE);
+//            empty_view.setVisibility(View.INVISIBLE);
         }
+        updateSubtitle();
     }
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
         setHasOptionsMenu(true);
     }
 
@@ -99,7 +102,6 @@ public class CrimeListFragment extends Fragment {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()){
             case R.id.menu_item_new_crime:
-
                 Crime crime = new Crime();
                 CrimeLab.getInstance(getActivity()).addCrime(crime);//TODO: Add addCrime() to Crime
                 Intent intent = CrimePagerActivity.newIntent(getActivity(), crime.getId());
@@ -109,7 +111,6 @@ public class CrimeListFragment extends Fragment {
             case R.id.menu_item_show_subtitle:
                 _subtitleVisible = !_subtitleVisible;
                 getActivity().invalidateOptionsMenu();
-
                 updateSubtitle();
                 return true;
 
@@ -122,7 +123,10 @@ public class CrimeListFragment extends Fragment {
 
         CrimeLab crimeLab = CrimeLab.getInstance(getActivity());
         int crimeCount = crimeLab.getCrimes().size();
-        String subtitle = getString(R.string.subtitle_format, crimeCount); //%d is digit
+        //String subtitle = getString(R.string.subtitle_format, crimeCount); //%d is digit
+
+        //plurals
+        String subtitle = getResources().getQuantityString(R.plurals.Subtitle_format, crimeCount, crimeCount);
 
         if(!_subtitleVisible){
             subtitle = null;
@@ -130,6 +134,12 @@ public class CrimeListFragment extends Fragment {
 
         AppCompatActivity  appCompatActivity = (AppCompatActivity) getActivity();
         appCompatActivity.getSupportActionBar().setSubtitle(subtitle);
+
+        if(crimeCount != 0){
+            empty_view.setVisibility(View.INVISIBLE);
+        }else {
+            empty_view.setVisibility(View.VISIBLE);
+        }
     }
 
     @Override

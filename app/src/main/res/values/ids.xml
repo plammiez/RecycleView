@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <item name="crime_report_solved" type="id">The case is solved</item>
+    <item name="crime_report_unsolved" type="id">The case is not solved</item>
+</resources>
