@@ -12,7 +12,7 @@ import com.augmentis.ayp.crimin.model.CrimeDbSchema.CrimeTable;
 
 public class CrimesBaseHelper extends SQLiteOpenHelper {
 
-    private static final int VERSION = 5;
+    private static final int VERSION = 6;
     private static final String DATABASE_NAME = "crimeBase.db";
     private static final String TAG = "CrimesBaseHelper";
 

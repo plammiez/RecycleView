@@ -13,10 +13,6 @@ import com.augmentis.ayp.crimin.model.CrimeDbSchema.CrimeTable;
 import java.util.Date;
 import java.util.UUID;
 
-
-/**
- * Created by Apinya on 8/1/2016.
- */
 public class CrimeCursorWrapper extends CursorWrapper {
     /**
      * Creates a cursor wrapper.

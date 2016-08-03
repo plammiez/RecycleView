@@ -23,6 +23,7 @@
     <string name="send_report">Send Crime Report Via</string>
     <string name="call_crime_suspect">Call Suspect</string>
     <string name="no_data_available">No Data! Please click above button for add data.</string>
+    <string name="denied_permission_to_call">Permission is denine.</string>
 
     <plurals name="Subtitle_format">
         <item quantity="one">%d Crime</item>

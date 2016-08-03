@@ -34,6 +34,5 @@ public abstract class SingleFragmentActivity extends AppCompatActivity {
         }
     }
 
-
     protected abstract Fragment onCreateFragment();
 }
