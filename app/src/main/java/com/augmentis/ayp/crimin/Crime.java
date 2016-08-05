@@ -1,6 +1,7 @@
 package com.augmentis.ayp.crimin;
 
 
+import java.io.File;
 import java.util.Date;
 import java.util.UUID;
 
@@ -65,6 +66,9 @@ public class Crime {
         this.solved = solved;
     }
 
+    public String getPhotoFileName() {
+        return "IMG_" + getId().toString() + ".jpg";
+    }
 
     @Override
     public String toString() {

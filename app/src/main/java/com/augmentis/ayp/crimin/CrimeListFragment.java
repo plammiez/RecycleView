@@ -2,6 +2,7 @@ package com.augmentis.ayp.crimin;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -17,8 +18,12 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
+import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.augmentis.ayp.crimin.model.PictureUtils;
+
+import java.io.File;
 import java.util.List;
 
 /**
@@ -173,6 +178,7 @@ public class CrimeListFragment extends Fragment {
         public TextView _titleTextView;
         public TextView _dateTextView;
         public CheckBox _solvedCheckBox;
+        public ImageView _photoView;
 
         Crime _crime;
         int _position;
@@ -183,17 +189,14 @@ public class CrimeListFragment extends Fragment {
             _titleTextView = (TextView) itemView.findViewById(R.id.list_item_crime_title_text_view);
             _solvedCheckBox = (CheckBox) itemView.findViewById(R.id.list_item_crime_solved_check_box);
             _dateTextView = (TextView) itemView.findViewById(R.id.list_item_crime_date_text_view);
+            _photoView = (ImageView) itemView.findViewById(R.id.list_item_photo);
 
             itemView.setOnClickListener(this);
         }
 
-
-
-
         public void bind(final Crime crime , int position) {
             _crime = crime;
             _position = position;
-
             _titleTextView.setText(_crime.getTitle());
             _dateTextView.setText(_crime.getCrimeDate().toString());
             _solvedCheckBox.setChecked(_crime.isSolved());
@@ -204,6 +207,10 @@ public class CrimeListFragment extends Fragment {
                     CrimeLab.getInstance(getActivity()).updateCrime(_crime);
                 }
             });
+
+            File photoFile = CrimeLab.getInstance(getActivity()).getPhotoFile(_crime);
+            Bitmap bitmap = PictureUtils.getScaleBitmap(photoFile.getPath(), getActivity());
+            _photoView.setImageBitmap(bitmap);
 
         }
 

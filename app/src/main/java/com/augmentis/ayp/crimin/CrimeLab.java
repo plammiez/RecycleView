@@ -4,11 +4,13 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.os.Environment;
 import android.util.Log;
 
 import com.augmentis.ayp.crimin.model.CrimeCursorWrapper;
 import com.augmentis.ayp.crimin.model.CrimesBaseHelper;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
@@ -125,6 +127,13 @@ public class CrimeLab {
 
         database.update(CrimeTable.NAME, contentValues, CrimeTable.Cols.UUID
                 + " = ?", new String[] { uuidStr}); // uuidStr will manage n put in ? position (sql injection)
+    }
 
+    public File getPhotoFile(Crime crime){
+        File externalFileDir = context.getExternalFilesDir(Environment.DIRECTORY_PICTURES);
+        if (externalFileDir == null){
+            return null;
+        }
+        return new File(externalFileDir, crime.getPhotoFileName());
     }
 }
