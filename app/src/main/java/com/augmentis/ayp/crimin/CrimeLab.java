@@ -94,7 +94,6 @@ public class CrimeLab {
         }finally {
             cursorWrapper.close();
         }
-
         return crimes;
     }
 
@@ -104,9 +103,7 @@ public class CrimeLab {
         int size = crimeList.size();
         for(int i = 0; i < size; i++){
             System.out.println(crimeList.get(i));
-
         }
-
     }
 
     public void addCrime(Crime crime) {

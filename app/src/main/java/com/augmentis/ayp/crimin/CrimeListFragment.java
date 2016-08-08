@@ -27,9 +27,6 @@ import com.augmentis.ayp.crimin.model.PictureUtils;
 import java.io.File;
 import java.util.List;
 
-/**
- * Created by Apinya on 7/18/2016.
- */
 public class CrimeListFragment extends Fragment {
 
     private static final int REQUEST_UPDATED_CRIME = 401;

@@ -357,7 +357,7 @@ public class CrimeFragment extends Fragment {
                 CrimeLab.getInstance(getActivity()).deleteCrime(crime.getId());
                 callbacks.onCrimeDelete();
 //                getActivity().finish();
-                //updateCrime();
+//                updateCrime();
 
 //                CrimeLab.getInstance(getActivity()).deleteCrime(crime);
 //                Intent intent = CrimePagerActivity.newIntent(getActivity(), crime.getId());
