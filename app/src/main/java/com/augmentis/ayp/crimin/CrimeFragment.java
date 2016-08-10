@@ -455,7 +455,6 @@ public class CrimeFragment extends Fragment {
         }else {
             suspect = getString(R.string.crime_report_with_suspect);
         }
-
         String report = getString(R.string.crime_report,
                 crime.getTitle(), dateString, solvedString, suspect);
 
