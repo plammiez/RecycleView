@@ -42,6 +42,6 @@ implements CrimeFragment.Callbacks{
 
     @Override
     public void onCrimeDelete() {
-
+        finish();
     }
 }
